@@ -54,7 +54,19 @@ class App extends Component {
 
     let persons = null;
 
+    const style = {
+      backgroundColor: 'green',
+      color: 'white',
+      font : 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+
+    }
+
     if(this.state.other){
+
+      style.backgroundColor= 'red'
 
       persons = (
         <div>
@@ -73,11 +85,22 @@ class App extends Component {
 
       
     }
+
+    const classesArray =[]
+    if(this.state.Person.length <=2){
+      classesArray.push('red')
+    }
+
+    if(this.state.Person.length<=1){
+      classesArray.push('bold')
+    }
+
     return (
       <div className="App">
        <h1>Hello world</h1>
-       <button onClick={this.togglePerson}>Click Me</button>
-
+       <button onClick={this.togglePerson}
+       style={style}>Click Me</button>
+       <p className={classesArray.join(" ")}>This is really working</p>
         {persons}
        
       </div>
