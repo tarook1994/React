@@ -1,25 +1,85 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Person from './Person/Person';
 
 class App extends Component {
+  state = ({
+    Person: [
+      {id: '1', name: "Max", age: 28},
+      {id: '2', name: "tarek", age: 12},
+      {id: '3', name: "test", age: 22}
+    ],
+    other: true
+  })
+
+  eventClickHandler = () => {
+    console.log("I was clicked!")
+  //  {this.state.persons[0].name = "ajsdasjdas"}
+  }
+
+  nameHandler = (event, id) => {
+    console.log(event.target.value)
+    const personIndex = this.state.Person.findIndex(p => {
+      return p.id === id;
+    });
+
+    const person= {...this.state.Person[personIndex]}
+    person.name = event.target.value;
+
+    const persons = [...this.state.Person]
+    persons[personIndex] = person;
+
+    this.setState({ Person: persons })
+  }
+
+  togglePerson= () => {
+    const isVisible = this.state.other;
+    this.setState({
+      other: !isVisible
+    })
+  }
+
+  deletePerson = (personIndex) => {
+    console.log("clicked")
+   // let persons = this.state.Person.slice();
+   const persons = [...this.state.Person];
+    persons.splice(personIndex,1);
+    this.setState({
+      Person: persons
+    })
+  }
+
+  
   render() {
+
+    let persons = null;
+
+    if(this.state.other){
+
+      persons = (
+        <div>
+          {
+            this.state.Person.map((person, index) => {
+              return <Person 
+              name = {person.name}
+              age = {person.age}
+              click= {()=> this.deletePerson(index)}
+              key= {person.id}
+              changed= {(event) => this.nameHandler(event, person.id)}/>
+            })
+          }
+      </div> 
+      )
+
+      
+    }
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+       <h1>Hello world</h1>
+       <button onClick={this.togglePerson}>Click Me</button>
+
+        {persons}
+       
       </div>
     );
   }
