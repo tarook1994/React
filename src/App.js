@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import Radium from 'radium'
+import Radium, { StyleRoot } from 'radium'
 
 class App extends Component {
   state = ({
     Person: [
-      {id: '1', name: "Max", age: 28},
-      {id: '2', name: "tarek", age: 12},
-      {id: '3', name: "test", age: 22}
+      { id: '1', name: "Max", age: 28 },
+      { id: '2', name: "tarek", age: 12 },
+      { id: '3', name: "test", age: 22 }
     ],
     other: true
   })
 
   eventClickHandler = () => {
     console.log("I was clicked!")
-  //  {this.state.persons[0].name = "ajsdasjdas"}
+    //  {this.state.persons[0].name = "ajsdasjdas"}
   }
 
   nameHandler = (event, id) => {
@@ -24,7 +24,7 @@ class App extends Component {
       return p.id === id;
     });
 
-    const person= {...this.state.Person[personIndex]}
+    const person = { ...this.state.Person[personIndex] }
     person.name = event.target.value;
 
     const persons = [...this.state.Person]
@@ -33,7 +33,7 @@ class App extends Component {
     this.setState({ Person: persons })
   }
 
-  togglePerson= () => {
+  togglePerson = () => {
     const isVisible = this.state.other;
     this.setState({
       other: !isVisible
@@ -42,15 +42,15 @@ class App extends Component {
 
   deletePerson = (personIndex) => {
     console.log("clicked")
-   // let persons = this.state.Person.slice();
-   const persons = [...this.state.Person];
-    persons.splice(personIndex,1);
+    // let persons = this.state.Person.slice();
+    const persons = [...this.state.Person];
+    persons.splice(personIndex, 1);
     this.setState({
       Person: persons
     })
   }
 
-  
+
   render() {
 
     let persons = null;
@@ -58,7 +58,7 @@ class App extends Component {
     const style = {
       backgroundColor: 'green',
       color: 'white',
-      font : 'inherit',
+      font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
       cursor: 'pointer',
@@ -68,46 +68,51 @@ class App extends Component {
 
     }
 
-    if(this.state.other){
+    if (this.state.other) {
 
-      style.backgroundColor= 'red'
+      style.backgroundColor = 'red'
 
       persons = (
         <div>
           {
             this.state.Person.map((person, index) => {
-              return <Person 
-              name = {person.name}
-              age = {person.age}
-              click= {()=> this.deletePerson(index)}
-              key= {person.id}
-              changed= {(event) => this.nameHandler(event, person.id)}/>
+              return <Person
+                name={person.name}
+                age={person.age}
+                click={() => this.deletePerson(index)}
+                key={person.id}
+                changed={(event) => this.nameHandler(event, person.id)} />
             })
           }
-      </div> 
+        </div>
       )
 
-      
+
     }
 
-    const classesArray =[]
-    if(this.state.Person.length <=2){
+    const classesArray = []
+    if (this.state.Person.length <= 2) {
       classesArray.push('red')
+      style[':hover'].backgroundColor = 'blue'
+
     }
 
-    if(this.state.Person.length<=1){
+    if (this.state.Person.length <= 1) {
       classesArray.push('bold')
     }
 
     return (
-      <div className="App">
-       <h1>Hello world</h1>
-       <button onClick={this.togglePerson}
-       style={style}>Click Me</button>
-       <p className={classesArray.join(" ")}>This is really working</p>
-        {persons}
-       
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hello world</h1>
+          <button onClick={this.togglePerson}
+            style={style}>Click Me</button>
+          <p className={classesArray.join(" ")}>This is really working</p>
+          {persons}
+
+        </div>
+      </StyleRoot>
+
     );
   }
 }
