@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import AUX from '../hoc/Auxillary'
+import Class from '../hoc/WithClass'
+import withClass from '../hoc/WithClass';
 
 class App extends Component {
   constructor(props) {
@@ -79,7 +82,7 @@ class App extends Component {
     }
 
     return (
-      <div className={classes.App}>
+      <Class classes={classes.App}>
         <Cockpit
           title={this.props.appTitle}
           showPersons={this.state.showPersons}
@@ -87,7 +90,8 @@ class App extends Component {
           clicked={this.togglePersonsHandler}
         />
         {persons}
-      </div>
+      </Class>
+
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
