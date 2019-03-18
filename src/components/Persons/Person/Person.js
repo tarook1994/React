@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 import classes from './Person.css';
 
@@ -14,5 +15,11 @@ const person = props => {
     </div>
   );
 };
+
+person.PropTypes = {
+  click: PropTypes.func,
+  name: PropTypes.string,
+  age: PropTypes.number
+}
 
 export default person;
